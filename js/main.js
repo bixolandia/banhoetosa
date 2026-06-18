@@ -16,20 +16,19 @@ document.querySelectorAll('.nav a[href^="#"]').forEach((link) => {
   });
 });
 
-/* Lightbox — álbum Arraiá */
-const lightbox = document.getElementById("arraia-lightbox");
+/* Lightbox — álbuns da galeria */
+const lightbox = document.getElementById("gallery-lightbox");
 const lightboxImg = lightbox?.querySelector(".lightbox__img");
 const lightboxCaption = lightbox?.querySelector(".lightbox__caption");
-const arraiaPhotos = Array.from(
-  document.querySelectorAll(".arraia-album__item img")
-);
+let lightboxPhotos = [];
 let lightboxIndex = 0;
 
-function showLightbox(index) {
-  if (!lightbox || !lightboxImg || !arraiaPhotos.length) return;
+function showLightbox(photos, index) {
+  if (!lightbox || !lightboxImg || !photos.length) return;
 
-  lightboxIndex = (index + arraiaPhotos.length) % arraiaPhotos.length;
-  const photo = arraiaPhotos[lightboxIndex];
+  lightboxPhotos = photos;
+  lightboxIndex = (index + photos.length) % photos.length;
+  const photo = photos[lightboxIndex];
 
   lightboxImg.src = photo.src;
   lightboxImg.alt = photo.alt;
@@ -48,18 +47,26 @@ function closeLightbox() {
   lightbox.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
   lightboxImg?.removeAttribute("src");
+  lightboxPhotos = [];
 }
 
-document.querySelectorAll(".arraia-album__item").forEach((btn, index) => {
-  btn.addEventListener("click", () => showLightbox(index));
+document.querySelectorAll(".gallery-album__item").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const grid = btn.closest(".gallery-album__grid");
+    if (!grid) return;
+
+    const photos = Array.from(grid.querySelectorAll("img"));
+    const buttons = Array.from(grid.querySelectorAll(".gallery-album__item"));
+    showLightbox(photos, buttons.indexOf(btn));
+  });
 });
 
 lightbox?.querySelector(".lightbox__nav--prev")?.addEventListener("click", () => {
-  showLightbox(lightboxIndex - 1);
+  showLightbox(lightboxPhotos, lightboxIndex - 1);
 });
 
 lightbox?.querySelector(".lightbox__nav--next")?.addEventListener("click", () => {
-  showLightbox(lightboxIndex + 1);
+  showLightbox(lightboxPhotos, lightboxIndex + 1);
 });
 
 lightbox?.querySelectorAll("[data-lightbox-close]").forEach((el) => {
@@ -67,9 +74,9 @@ lightbox?.querySelectorAll("[data-lightbox-close]").forEach((el) => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (lightbox?.hidden) return;
+  if (lightbox?.hidden || !lightboxPhotos.length) return;
 
   if (e.key === "Escape") closeLightbox();
-  if (e.key === "ArrowLeft") showLightbox(lightboxIndex - 1);
-  if (e.key === "ArrowRight") showLightbox(lightboxIndex + 1);
+  if (e.key === "ArrowLeft") showLightbox(lightboxPhotos, lightboxIndex - 1);
+  if (e.key === "ArrowRight") showLightbox(lightboxPhotos, lightboxIndex + 1);
 });
