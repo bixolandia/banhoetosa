@@ -403,46 +403,82 @@ a {
 
 @media (max-width: 768px) {
   .promo {
-    padding-top: 4.75rem;
-    padding-bottom: 2rem;
+    padding: 4.5rem 0 1.5rem;
   }
 
   .promo__grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 0.75rem;
+    align-items: center;
   }
 
   .promo__content {
     width: 100%;
-    order: 2;
+    min-width: 0;
+    align-items: center;
+    text-align: center;
   }
 
   .promo__flyer {
-    order: 1;
     width: 100%;
-    max-width: 320px;
-    margin-inline: auto;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    border-width: 3px;
   }
 
   .promo__urgency {
-    font-size: clamp(0.8rem, 3.5vw, 1rem);
-    padding: 0.55rem 1rem;
-    line-height: 1.3;
-    max-width: 100%;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: clamp(0.62rem, 2.8vw, 0.8rem);
+    padding: 0.45rem 0.5rem;
+    line-height: 1.25;
+    margin-bottom: 0.65rem;
+    border-width: 2px;
+    text-align: center;
   }
 
   .promo__title {
     width: 100%;
     max-width: 100%;
-    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
-    padding: 0.9rem 1rem;
+    box-sizing: border-box;
+    font-size: clamp(0.72rem, 3.2vw, 0.95rem);
+    padding: 0.55rem 0.45rem;
     line-height: 1.2;
+    margin-bottom: 0.75rem;
+    border-width: 2px;
   }
 
   .promo__cta {
+    width: 100%;
     max-width: 100%;
-    font-size: 0.95rem;
-    padding: 0.8rem 1.25rem;
+    font-size: clamp(0.62rem, 2.8vw, 0.78rem);
+    padding: 0.55rem 0.4rem;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .promo__grid {
+    gap: 0.5rem;
+  }
+
+  .promo__urgency {
+    font-size: 0.58rem;
+    padding: 0.4rem 0.35rem;
+  }
+
+  .promo__title {
+    font-size: 0.68rem;
+    padding: 0.45rem 0.35rem;
+  }
+
+  .promo__cta {
+    font-size: 0.58rem;
+    padding: 0.5rem 0.35rem;
   }
 }
 
